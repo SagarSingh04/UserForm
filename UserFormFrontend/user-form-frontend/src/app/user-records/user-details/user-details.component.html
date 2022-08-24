@@ -1,0 +1,78 @@
+<div class="register-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>First Name</label>
+      <input
+        type="text"
+        formControlName="firstName"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"
+      />
+      <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+        <div *ngIf="f['firstName'].errors['required']">First name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Last Name</label>
+      <input
+        type="text"
+        formControlName="lastName"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"
+      />
+      <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+        <div *ngIf="f['lastName'].errors['required']">Last name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        type="text"
+        formControlName="email"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+      />
+      <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+        <div *ngIf="f['email'].errors['required']">Email is required</div>
+        <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input
+        type="text"
+        formControlName="phoneNumber"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }"
+      />
+      <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+        <div *ngIf="f['phoneNumber'].errors['required']">Phone number is required</div>
+        <div *ngIf="f['phoneNumber'].errors['pattern']">Enter only number</div>
+        <div *ngIf="f['phoneNumber'].errors['minLength']">Minimum length 10.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Image path</label>
+      <input
+        type="text"
+        formControlName="imgPath"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['imgPath'].errors }"
+      />
+      <div *ngIf="submitted && f['imgPath'].errors" class="invalid-feedback">
+        <div *ngIf="f['imgPath'].errors['required']">Image path is required</div>
+      </div>
+    </div>
+    <div *ngIf="id !== 'add'" class="form-group">
+      <button type="submit" class="btn btn-primary">Update</button>
+      <button type="button" (click)="onDelete()" class="btn btn-warning float-right">
+        Delete
+      </button>
+    </div>
+    <div *ngIf="id === 'add'" class="form-group">
+      <button type="button" (click)="onAdd()" class="btn btn-warning float-right">
+        Add
+      </button>
+    </div>
+  </form>
+</div>
