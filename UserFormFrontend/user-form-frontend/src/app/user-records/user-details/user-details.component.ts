@@ -125,22 +125,5 @@ export class UserDetailsComponent implements OnInit {
     console.log("File: ", this.file);
 }
 
-// OnClick of button Upload
-onUpload() {
-  console.log("On upload clicked");
-    // this.loading = !this.loading;
-    // console.log(this.file);
-    // this.fileUploadService.upload(this.file).subscribe(
-    //     (event: any) => {
-    //         if (typeof (event) === 'object') {
-
-    //             // Short link via api response
-    //             this.shortLink = event.link;
-
-    //             this.loading = false; // Flag variable 
-    //         }
-    //     }
-    // );
-}
 
 }
