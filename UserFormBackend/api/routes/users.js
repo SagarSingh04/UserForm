@@ -3,6 +3,17 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.originalname)
+    }
+});
+const upload = multer({ storage: storage });
+
 router.get('/getUsers', async(req, res, next) => {
     try{
         const response = await User.find().exec();
@@ -21,14 +32,15 @@ router.get('/getUsers', async(req, res, next) => {
     
 });
 
-router.post('/createUser', async(req, res, next) => {
+router.post('/createUser', upload.single('image'), async(req, res, next) => {
     try{
+        console.log(req.file);
         const user = new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
-            imgPath: req.body.imgPath
+            imgPath: req.file.path
         });
         const response = await user.save();
         console.log(response);

@@ -46,22 +46,32 @@
         [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }"
       />
       <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+        <div *ngIf="f['phoneNumber'].errors['minLength']">Minimum length 10.</div>
         <div *ngIf="f['phoneNumber'].errors['required']">Phone number is required</div>
         <div *ngIf="f['phoneNumber'].errors['pattern']">Enter only number</div>
-        <div *ngIf="f['phoneNumber'].errors['minLength']">Minimum length 10.</div>
       </div>
     </div>
     <div class="form-group">
       <label>Image path</label>
-      <input
+
+      <!-- <input
         type="text"
         formControlName="imgPath"
         class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f['imgPath'].errors }"
-      />
-      <div *ngIf="submitted && f['imgPath'].errors" class="invalid-feedback">
+        />
+        <div *ngIf="submitted && f['imgPath'].errors" class="invalid-feedback">
+          <div *ngIf="f['imgPath'].errors['required']">Image path is required</div>
+        </div> -->
+      
+      <div class="text-center">
+        <input class="form-control" type="file" 
+                formControlName="imgPath"
+                (change)="onChange($event)">
+      <!-- <div *ngIf="submitted && f['imgPath'].status === 'INVALID' " class="invalid-feedback">
         <div *ngIf="f['imgPath'].errors['required']">Image path is required</div>
-      </div>
+      </div> -->
+    </div>
     </div>
     <div *ngIf="id !== 'add'" class="form-group">
       <button type="submit" class="btn btn-primary">Update</button>

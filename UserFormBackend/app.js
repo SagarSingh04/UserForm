@@ -18,17 +18,17 @@ app.use(bodyParser.json());
 
 app.use(cors({origin:true,credentials: true}));
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');     //For all client
-    // res.header('Access-Control-Allow-Origin', 'http://mu-cool-page.com');    //For my-cool-page.com client
-    res.header('Acess-Control-Allow-Headers', 
-    "Orgin, X-Requested-With, Content-Type, Accept, Authorization");
-    if(req.method === 'OPTIONS'){
-        res.header('Acess-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-        return res.status(200).json({});
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');     //For all client
+//     // res.header('Access-Control-Allow-Origin', 'http://mu-cool-page.com');    //For my-cool-page.com client
+//     res.header('Acess-Control-Allow-Headers', 
+//     "Orgin, X-Requested-With, Content-Type, Accept, Authorization");
+//     if(req.method === 'OPTIONS'){
+//         res.header('Acess-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+//         return res.status(200).json({});
+//     }
+//     next();
+// });
 
 app.use('/users', usersRoute);
 

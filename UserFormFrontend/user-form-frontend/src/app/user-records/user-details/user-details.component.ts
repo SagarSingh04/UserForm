@@ -22,6 +22,10 @@ export class UserDetailsComponent implements OnInit {
   submitted = false;
   id: any = '0';
 
+  shortLink: string = "";
+  loading: boolean = false; // Flag variable
+  file?: File = undefined; // Variable to store file
+
   constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private userDetailsService: UserDetailsService, private router: Router,
     private _snackBar: MatSnackBar) {
@@ -50,13 +54,13 @@ export class UserDetailsComponent implements OnInit {
       if(this.id !== "add"){
         this.userDetailsService.getUserdetails(this.id).subscribe(response => {
           // console.log(response.response.firstName);
-          this.form.setValue({
+          this.form.patchValue({
             firstName: response.response.firstName,
             lastName: response.response.lastName,
             email: response.response.email,
-            phoneNumber: response.response.phoneNumber,
-            imgPath: response.response.imgPath
-          })
+            phoneNumber: response.response.phoneNumber
+          });
+          console.log(this.form.controls)
         });
       }
       
@@ -98,9 +102,16 @@ export class UserDetailsComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    const formData = new FormData();
+    formData.append("image", this.file!);
+    formData.append("firstName", this.form.value.firstName);
+    formData.append("lastName", this.form.value.lastName);
+    formData.append("email", this.form.value.email);
+    formData.append("phoneNumber", this.form.value.phoneNumber);
     console.log(JSON.stringify(this.form.value, null, 2));
+    console.log(formData);
 
-    this.userDetailsService.addUser(this.form.value).subscribe(res => {
+    this.userDetailsService.addUser(formData).subscribe(res => {
       console.log(res);
       if(res.message === "success"){
         this._snackBar.open("Added", "Close");
@@ -108,5 +119,28 @@ export class UserDetailsComponent implements OnInit {
       }
     });
   }
+
+  onChange(event: any) {
+    this.file = event.target.files[0];
+    console.log("File: ", this.file);
+}
+
+// OnClick of button Upload
+onUpload() {
+  console.log("On upload clicked");
+    // this.loading = !this.loading;
+    // console.log(this.file);
+    // this.fileUploadService.upload(this.file).subscribe(
+    //     (event: any) => {
+    //         if (typeof (event) === 'object') {
+
+    //             // Short link via api response
+    //             this.shortLink = event.link;
+
+    //             this.loading = false; // Flag variable 
+    //         }
+    //     }
+    // );
+}
 
 }
